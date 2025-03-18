@@ -2,11 +2,26 @@ import './App.css';
 import Nav from './components/Nav'
 import ContentWrapper from './components/ContentWrapper'
 import Footer from './components/Footer'
+import { useSelector, useDispatch } from 'react-redux';
+import { setLightMode, setDarkMode } from './features/modeSlice';
 
 function App() {
+  const dispatch = useDispatch();
+  const mode = useSelector(state => state)
+
+  const onModeChange = e => {
+    const actionCreator = mode.darkMode ? setLightMode : setDarkMode;
+    dispatch(actionCreator());
+  }
   
   return (
-    <div style={{ backgroundColor: 'white', color: 'black' }} className="App">
+    <div style={{ backgroundColor: mode.color1, color: mode.color2 }} className="App">
+      <button
+        type='button'
+        onClick={onModeChange}
+      >
+        Toggle Dark Mode
+      </button>
       <Nav />
       <ContentWrapper />
       <Footer />
